@@ -22,7 +22,14 @@ app.get("/userFindOne/:userNameOrEmail", async (req, res) => {
     : (response.response = find);
   res.send(response);
 });
-
+app.get("/user/FindOne", async (req, res) => {
+  const userNameOrEmail = req.body.user_name || req.body.email;
+  let find = await userFindOne(userNameOrEmail);
+  find == ""
+    ? (response.response = "user not found")
+    : (response.response = find);
+  res.send(response);
+});
 
 const PORT = process.env.PORT || "3001";
 app.listen(PORT, console.log(`srv on port: ${PORT}`));
