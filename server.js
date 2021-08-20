@@ -31,6 +31,7 @@ const User = sequelize.define(
     password: { type: DataTypes.STRING, allowNull: false },
   },
   {
+    timestamps: false,
     tableName: "users",
   }
 );
@@ -60,5 +61,19 @@ async function userFindOne(userNameOrEmail) {
     { type: "SELECT" }
   );
 }
+async function userPost(user) {
+  await sequelize.query(
+    `INSERT INTO users (user_name, first_name_and_last_name, email, phone_number, shipping_address, password)` +
+      `VALUES ('${user.user_name}', '${user.first_name_and_last_name}', '${user.email}', '${user.phone_number}',` +
+      `'${user.shipping_address}', '${user.password}') `,
+    { type: "INSERT" }
+  );
+}
+async function userDelete(user) {
+  await sequelize.query(
+    `DELETE FROM users WHERE user_name = '${user[0].user_name}'`,
+    { type: "DELETE" }
+  );
+}
 
-export { usersFindAll, userFindOne };
+export { usersFindAll, userFindOne, userPost, userDelete };
