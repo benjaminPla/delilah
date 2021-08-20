@@ -2,7 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 
-import { usersFindAll, userFindOne, userPost, userDelete } from "./server.js";
+import {
+  usersFindAll,
+  userFindOne,
+  userPost,
+  userDelete,
+  userPut,
+} from "./server.js";
 
 const app = express();
 
@@ -54,6 +60,15 @@ app.delete("/userDelete/:userNameOrEmail", async (req, res) => {
     ? (response = { error: true, code: 400, response: "user not found" })
     : ((response.response = `deleted user ${find[0].user_name}`),
       userDelete(find));
+  res.send(response);
+});
+app.put("/userPut", async (req, res) => {
+  const userNameOrEmail = req.body.user_name || req.body.email;
+  let find = await userFindOne(userNameOrEmail);
+  find == ""
+    ? (response = { error: true, code: 400, response: "user not found" })
+    : (userPut(find[0], req.body),
+      (response.response = `updated user ${find[0].user_name}`));
   res.send(response);
 });
 

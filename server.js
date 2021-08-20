@@ -75,5 +75,49 @@ async function userDelete(user) {
     { type: "DELETE" }
   );
 }
+async function userPut(old, put) {
+  let fields = [];
+  let field = "";
+  let value = "";
+  if (old.user_name !== put.user_name) {
+    field = "user_name";
+    fields.push(field);
+    value = put.user_name;
+    userPutQuery(field, value, put);
+  }
+  if (old.first_name_and_last_name !== put.first_name_and_last_name) {
+    field = "first_name_and_last_name";
+    fields.push(field);
+    value = put.first_name_and_last_name;
+    userPutQuery(field, value, put);
+  }
+  if (old.email !== put.email) {
+    field = "email";
+    fields.push(field);
+    value = put.email;
+    userPutQuery(field, value, put);
+  }
+  if (old.phone_number !== put.phone_number) {
+    field = "phone_number";
+    fields.push(field);
+    value = put.phone_number;
+    userPutQuery(field, value, put);
+  }
+  if (old.shipping_address !== put.shipping_address) {
+    field = "shipping_address";
+    fields.push(field);
+    value = put.shipping_address;
+    userPutQuery(field, value, put);
+  }
+  return fields;
+}
+async function userPutQuery(field, value, put) {
+  await sequelize.query(
+    `UPDATE users SET ${field} = '${value}' WHERE user_name = '${put.user_name}' OR email = '${put.email}'`,
+    {
+      type: "UPDATE",
+    }
+  );
+}
 
-export { usersFindAll, userFindOne, userPost, userDelete };
+export { usersFindAll, userFindOne, userPost, userDelete, userPut };
