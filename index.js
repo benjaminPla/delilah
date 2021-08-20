@@ -48,6 +48,14 @@ app.delete("/userDelete", async (req, res) => {
       userDelete(find));
   res.send(response);
 });
+app.delete("/userDelete/:userNameOrEmail", async (req, res) => {
+  let find = await userFindOne(req.params.userNameOrEmail);
+  find == ""
+    ? (response = { error: true, code: 400, response: "user not found" })
+    : ((response.response = `deleted user ${find[0].user_name}`),
+      userDelete(find));
+  res.send(response);
+});
 
 const PORT = process.env.PORT || "3001";
 app.listen(PORT, console.log(`srv on port: ${PORT}`));
