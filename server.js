@@ -35,11 +35,8 @@ const User = sequelize.define(
     tableName: "users",
   }
 );
-
 // await User.sync({ force: true });
-
 // const suPassword = jwt.sign(process.env.SECURITY_TOKEN, "1234");
-
 // const newUser = User.build({
 //   user_name: "su",
 //   first_name_and_last_name: "super admin",
@@ -121,4 +118,35 @@ async function userPutQuery(field, value, put) {
   );
 }
 
-export { usersFindAll, userFindOne, userPost, userDelete, userPut };
+const Product = sequelize.define(
+  "Product",
+  {
+    product_name: { type: DataTypes.STRING(50), allowNull: false },
+    price: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  {
+    timestamps: false,
+    tableName: "products",
+  }
+);
+// await Product.sync({ force: true });
+// const newProduct = Product.build({
+//   product_name: "product1",
+//   price: 10,
+// });
+// await newProduct.save();
+
+async function productsFindAll() {
+  return await sequelize.query("SELECT * FROM products WHERE 1", {
+    type: "SELECT",
+  });
+}
+
+export {
+  usersFindAll,
+  userFindOne,
+  userPost,
+  userDelete,
+  userPut,
+  productsFindAll,
+};
