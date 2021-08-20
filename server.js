@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 import DataTypes from "sequelize";
-// import jwt from "jsonwebtoken";
-// import dotenv from "dotenv";
-// dotenv.config();
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 const sequelize = new Sequelize("delilah", "root", "", {
   host: "localhost",
@@ -62,10 +62,11 @@ async function userFindOne(userNameOrEmail) {
   );
 }
 async function userPost(user) {
+  const password = jwt.sign(process.env.SECURITY_TOKEN, user.password);
   await sequelize.query(
     `INSERT INTO users (user_name, first_name_and_last_name, email, phone_number, shipping_address, password)` +
       `VALUES ('${user.user_name}', '${user.first_name_and_last_name}', '${user.email}', '${user.phone_number}',` +
-      `'${user.shipping_address}', '${user.password}') `,
+      `'${user.shipping_address}', '${password}') `,
     { type: "INSERT" }
   );
 }
