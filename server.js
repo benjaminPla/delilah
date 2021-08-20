@@ -147,6 +147,12 @@ async function productFindOne(productName) {
     { type: "SELECT" }
   );
 }
+async function productPost(product) {
+  await sequelize.query(
+    `INSERT INTO products (product_name, price) VALUES ('${product.product_name}', ${product.price})`,
+    { type: "INSERT" }
+  );
+}
 
 export {
   usersFindAll,
@@ -156,4 +162,5 @@ export {
   userPut,
   productsFindAll,
   productFindOne,
+  productPost,
 };

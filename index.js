@@ -11,6 +11,7 @@ import {
   userPut,
   productsFindAll,
   productFindOne,
+  productPost,
 } from "./server.js";
 
 const app = express();
@@ -111,6 +112,26 @@ app.get("/productFindOne", async (req, res) => {
   find == ""
     ? (response.response = "product not found")
     : (response.response = find);
+  res.send(response);
+});
+app.get("/productFindOne/:productName", async (req, res) => {
+  let find = await productFindOne(req.params.productName);
+  find == ""
+    ? (response.response = "product not found")
+    : (response.response = find);
+  res.send(response);
+});
+app.post("/productPost", async (req, res) => {
+  const productName = req.body.product_name;
+  let find = await productFindOne(productName);
+  find == ""
+    ? (productPost(req.body),
+      (response.response = `posted product: ${productName}`))
+    : (response = {
+        error: true,
+        code: 400,
+        response: "product already exist",
+      });
   res.send(response);
 });
 
