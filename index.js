@@ -10,6 +10,7 @@ import {
   userDelete,
   userPut,
   productsFindAll,
+  productFindOne,
 } from "./server.js";
 
 const app = express();
@@ -102,6 +103,14 @@ app.get("/login", async (req, res) => {
 
 app.get("/productsFindAll", async (req, res) => {
   response.response = await productsFindAll();
+  res.send(response);
+});
+app.get("/productFindOne", async (req, res) => {
+  const productName = req.body.product_name;
+  let find = await productFindOne(productName);
+  find == ""
+    ? (response.response = "product not found")
+    : (response.response = find);
   res.send(response);
 });
 

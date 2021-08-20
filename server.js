@@ -141,6 +141,12 @@ async function productsFindAll() {
     type: "SELECT",
   });
 }
+async function productFindOne(productName) {
+  return await sequelize.query(
+    `SELECT * FROM products WHERE product_name = '${productName}'`,
+    { type: "SELECT" }
+  );
+}
 
 export {
   usersFindAll,
@@ -149,4 +155,5 @@ export {
   userDelete,
   userPut,
   productsFindAll,
+  productFindOne,
 };
