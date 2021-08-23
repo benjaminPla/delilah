@@ -5,9 +5,10 @@ function productsDropTable() {
 function productsCreateTable() {
   const sql =
     "CREATE TABLE products (" +
-    "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+    "id INT NOT NULL AUTO_INCREMENT," +
     "product_name VARCHAR(50) NOT NULL," +
-    "price INT NOT NULL" +
+    "price INT NOT NULL," +
+    "PRIMARY KEY (id)" +
     ");";
   return sql;
 }

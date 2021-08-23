@@ -5,14 +5,15 @@ function usersDropTable() {
 function usersCreatetable() {
   const sql =
     "CREATE TABLE users (" +
-    "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+    "id INT NOT NULL AUTO_INCREMENT," +
     "user_name VARCHAR(50) NOT NULL," +
     "full_name VARCHAR(50) NOT NULL," +
     "email VARCHAR(50) NOT NULL," +
     "phone_number VARCHAR(50) NOT NULL," +
     "shipping_address VARCHAR(50) NOT NULL," +
-    "password VARCHAR(255) NOT NULL" +
+    "password VARCHAR(255) NOT NULL," +
     // "rank VARCHAR(10) NOT NULL DEFAULT 'user'" +
+    "PRIMARY KEY (id)" +
     ");";
   return sql;
 }
