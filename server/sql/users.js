@@ -1,9 +1,9 @@
 function usersDropTable() {
-  let sql = "DROP TABLE IF EXISTS users;";
+  const sql = "DROP TABLE IF EXISTS users;";
   return sql;
 }
 function usersCreatetable() {
-  let sql =
+  const sql =
     "CREATE TABLE users (" +
     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
     "user_name VARCHAR(50) NOT NULL," +
@@ -11,14 +11,15 @@ function usersCreatetable() {
     "email VARCHAR(50) NOT NULL," +
     "phone_number VARCHAR(50) NOT NULL," +
     "shipping_address VARCHAR(50) NOT NULL," +
-    "password VARCHAR(50) NOT NULL" +
+    "password VARCHAR(255) NOT NULL" +
     // "rank VARCHAR(10) NOT NULL DEFAULT 'user'" +
     ");";
   return sql;
 }
 function usersInsertInto() {
-  let sql =
-    "INSERT INTO users VALUES (1, 'ablomfield0', 'Alberto Blomfield', 'ablomfield0@dagondesign.com', '(157) 2156602', '1895 Oakridge Plaza', '6V7H0q4IyWgN')," +
+  const sql =
+    "INSERT INTO users VALUES" +
+    "(1, 'ablomfield0', 'Alberto Blomfield', 'ablomfield0@dagondesign.com', '(157) 2156602', '1895 Oakridge Plaza', '6V7H0q4IyWgN')," +
     "(2, 'eslingsby1', 'Ethelda Slingsby', 'eslingsby1@geocities.com', '(751) 1709544', '41 Sugar Street', 'RWzh3Pyy')," +
     "(3, 'cosherin2', 'Cristie O''Sherin', 'cosherin2@usgs.gov', '(844) 3663444', '0 Gerald Parkway', 'ayfzDqHSjmbX')," +
     "(4, 'lfawdry3', 'Leonie Fawdry', 'lfawdry3@yale.edu', '(444) 3197227', '047 Ronald Regan Circle', 'YPRVY7OjqVHY')," +

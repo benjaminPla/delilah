@@ -2,19 +2,20 @@ import express from "express";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
-
 import {
   usersFindAll,
   userFindOne,
   userPost,
   userDelete,
   userPut,
+} from "./server/user.js";
+import {
   productsFindAll,
   productFindOne,
   productPost,
   productDelete,
   productPut,
-} from "./server.js";
+} from "./server/products.js";
 
 const app = express();
 
