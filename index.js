@@ -170,9 +170,4 @@ app.put("/productPut", async (req, res) => {
 const PORT = process.env.PORT || "3001";
 app.listen(PORT, console.log(`srv on port: ${PORT}`));
 
-// app.get("*", (req, res) => {
-//   response = { error: true, code: 404, response: "invalid path" };
-//   res.send(response);
-// });
-
 export { response };

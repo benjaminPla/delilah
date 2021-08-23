@@ -1,6 +1,11 @@
 import { Sequelize } from "sequelize";
 import DataTypes from "sequelize";
 import jwt from "jsonwebtoken";
+import {
+  usersDropTable,
+  usersCreatetable,
+  usersInsertInto,
+} from "./sql/users.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,32 +25,9 @@ try {
   console.log(error);
 }
 
-const User = sequelize.define(
-  "User",
-  {
-    user_name: { type: DataTypes.STRING(50), allowNull: false },
-    first_name_and_last_name: { type: DataTypes.STRING(50), allowNull: false },
-    email: { type: DataTypes.STRING(50), allowNull: false },
-    phone_number: { type: DataTypes.STRING(50), allowNull: false },
-    shipping_address: { type: DataTypes.STRING(50), allowNull: false },
-    password: { type: DataTypes.STRING, allowNull: false },
-  },
-  {
-    timestamps: false,
-    tableName: "users",
-  }
-);
-// await User.sync({ force: true });
-// const suPassword = jwt.sign(process.env.SECURITY_TOKEN, "1234");
-// const newUser = User.build({
-//   user_name: "su",
-//   first_name_and_last_name: "super admin",
-//   email: "su@example.com",
-//   phone_number: "666",
-//   shipping_address: "address",
-//   password: suPassword,
-// });
-// await newUser.save();
+await sequelize.query(usersDropTable());
+await sequelize.query(usersCreatetable());
+await sequelize.query(usersInsertInto());
 
 async function usersFindAll() {
   return await sequelize.query("SELECT * FROM users WHERE 1", {
@@ -61,8 +43,8 @@ async function userFindOne(userNameOrEmail) {
 async function userPost(user) {
   const password = jwt.sign(process.env.SECURITY_TOKEN, user.password);
   await sequelize.query(
-    `INSERT INTO users (user_name, first_name_and_last_name, email, phone_number, shipping_address, password)` +
-      `VALUES ('${user.user_name}', '${user.first_name_and_last_name}', '${user.email}', '${user.phone_number}',` +
+    `INSERT INTO users (user_name, full_name, email, phone_number, shipping_address, password)` +
+      `VALUES ('${user.user_name}', '${user.full_name}', '${user.email}', '${user.phone_number}',` +
       `'${user.shipping_address}', '${password}') `,
     { type: "INSERT" }
   );
@@ -75,10 +57,10 @@ async function userDelete(user) {
 }
 async function userPut(user) {
   await sequelize.query(
-    "UPDATE users SET first_name_and_last_name = ?, phone_number = ?, shipping_address = ? WHERE user_name = ? OR email = ?",
+    "UPDATE users SET full_name = ?, phone_number = ?, shipping_address = ? WHERE user_name = ? OR email = ?",
     {
       replacements: [
-        user.first_name_and_last_name,
+        user.full_name,
         user.phone_number,
         user.shipping_address,
         user.user_name,
@@ -139,6 +121,24 @@ async function productPut(product) {
     { replacements: [product.price, product.product_name], type: "UPDATE" }
   );
 }
+
+// const Order = sequelize.define(
+//   "Order",
+//   {
+//     user_id: { type: DataTypes.STRING(10), allowNull: false },
+//     products_id: { type: DataTypes.INTEGER, allowNull: false },
+//   },
+//   {
+//     timestamps: false,
+//     tableName: "orders",
+//   }
+// );
+// await Order.sync({ force: true });
+// const newOrder = Order.build({
+//   user_id: "1",
+//   products_id: "1",
+// });
+// await newOrder.save();
 
 export {
   usersFindAll,
