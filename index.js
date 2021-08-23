@@ -12,6 +12,8 @@ import {
   productsFindAll,
   productFindOne,
   productPost,
+  productDelete,
+  productPut,
 } from "./server.js";
 
 const app = express();
@@ -70,7 +72,7 @@ app.put("/userPut", async (req, res) => {
   let find = await userFindOne(userNameOrEmail);
   find == ""
     ? (response = { error: true, code: 400, response: "user not found" })
-    : (userPut(find[0], req.body),
+    : (userPut(req.body),
       (response.response = `updated user ${find[0].user_name}`));
   res.send(response);
 });
@@ -134,8 +136,43 @@ app.post("/productPost", async (req, res) => {
       });
   res.send(response);
 });
+app.delete("/productDelete", async (req, res) => {
+  const productName = req.body.product_name;
+  let find = await productFindOne(productName);
+  find == ""
+    ? (response = {
+        error: true,
+        code: 400,
+        response: "product not found",
+      })
+    : (productDelete(find),
+      (response.response = `deleted product ${productName}`));
+  res.send(response);
+});
+app.delete("/productDelete/:productName", async (req, res) => {
+  let find = await productFindOne(req.params.productName);
+  find == ""
+    ? (response = { error: true, code: 400, response: "product not found" })
+    : ((response.response = `deleted product ${find[0].product_name}`),
+      productDelete(find));
+  res.send(response);
+});
+app.put("/productPut", async (req, res) => {
+  const productName = req.body.product_name;
+  let find = await productFindOne(productName);
+  find == ""
+    ? (response = { error: true, code: 400, response: "product not found" })
+    : (productPut(req.body),
+      (response.response = `updated product ${find[0].product_name}`));
+  res.send(response);
+});
 
 const PORT = process.env.PORT || "3001";
 app.listen(PORT, console.log(`srv on port: ${PORT}`));
+
+// app.get("*", (req, res) => {
+//   response = { error: true, code: 404, response: "invalid path" };
+//   res.send(response);
+// });
 
 export { response };

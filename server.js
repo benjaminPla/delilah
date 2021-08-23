@@ -73,46 +73,17 @@ async function userDelete(user) {
     { type: "DELETE" }
   );
 }
-async function userPut(old, put) {
-  let fields = [];
-  let field = "";
-  let value = "";
-  if (old.user_name !== put.user_name) {
-    field = "user_name";
-    fields.push(field);
-    value = put.user_name;
-    userPutQuery(field, value, put);
-  }
-  if (old.first_name_and_last_name !== put.first_name_and_last_name) {
-    field = "first_name_and_last_name";
-    fields.push(field);
-    value = put.first_name_and_last_name;
-    userPutQuery(field, value, put);
-  }
-  if (old.email !== put.email) {
-    field = "email";
-    fields.push(field);
-    value = put.email;
-    userPutQuery(field, value, put);
-  }
-  if (old.phone_number !== put.phone_number) {
-    field = "phone_number";
-    fields.push(field);
-    value = put.phone_number;
-    userPutQuery(field, value, put);
-  }
-  if (old.shipping_address !== put.shipping_address) {
-    field = "shipping_address";
-    fields.push(field);
-    value = put.shipping_address;
-    userPutQuery(field, value, put);
-  }
-  return fields;
-}
-async function userPutQuery(field, value, put) {
+async function userPut(user) {
   await sequelize.query(
-    `UPDATE users SET ${field} = '${value}' WHERE user_name = '${put.user_name}' OR email = '${put.email}'`,
+    "UPDATE users SET first_name_and_last_name = ?, phone_number = ?, shipping_address = ? WHERE user_name = ? OR email = ?",
     {
+      replacements: [
+        user.first_name_and_last_name,
+        user.phone_number,
+        user.shipping_address,
+        user.user_name,
+        user.email,
+      ],
       type: "UPDATE",
     }
   );
@@ -143,14 +114,29 @@ async function productsFindAll() {
 }
 async function productFindOne(productName) {
   return await sequelize.query(
-    `SELECT * FROM products WHERE product_name = '${productName}'`,
-    { type: "SELECT" }
+    "SELECT * FROM products WHERE product_name = ?",
+    { replacements: [productName], type: "SELECT" }
   );
 }
 async function productPost(product) {
   await sequelize.query(
-    `INSERT INTO products (product_name, price) VALUES ('${product.product_name}', ${product.price})`,
-    { type: "INSERT" }
+    "INSERT INTO products (product_name, price) VALUES (?, ?)",
+    {
+      replacements: [product.product_name, product.price],
+      type: "INSERT",
+    }
+  );
+}
+async function productDelete(product) {
+  await sequelize.query("DELETE FROM products WHERE product_name = ?", {
+    replacements: [product[0].product_name],
+    type: "DELETE",
+  });
+}
+async function productPut(product) {
+  await sequelize.query(
+    "UPDATE products SET price = ? WHERE product_name = ?",
+    { replacements: [product.price, product.product_name], type: "UPDATE" }
   );
 }
 
@@ -163,4 +149,6 @@ export {
   productsFindAll,
   productFindOne,
   productPost,
+  productDelete,
+  productPut,
 };
