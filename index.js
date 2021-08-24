@@ -16,6 +16,7 @@ import {
   productDelete,
   productPut,
 } from "./server/products.js";
+import { ordersFindAll } from "./server/orders.js";
 
 const app = express();
 
@@ -166,6 +167,11 @@ app.put("/productPut", async (req, res) => {
     : (productPut(req.body),
       (response.response = `updated product ${find[0].product_name}`));
   res.send(response);
+});
+
+app.get("/ordersFindAll", async (req, res) => {
+  let find = await ordersFindAll();
+  res.send(find[0]);
 });
 
 const PORT = process.env.PORT || "3001";
