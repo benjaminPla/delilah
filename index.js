@@ -16,7 +16,7 @@ import {
   productDelete,
   productPut,
 } from "./server/products.js";
-import { ordersFindAll } from "./server/orders.js";
+import { ordersFindAll, orderFindOne, ordersPost } from "./server/orders.js";
 
 const app = express();
 
@@ -170,8 +170,26 @@ app.put("/productPut", async (req, res) => {
 });
 
 app.get("/ordersFindAll", async (req, res) => {
-  let find = await ordersFindAll();
-  res.send(find[0]);
+  response.response = await ordersFindAll();
+  res.send(response);
+});
+app.get("/orderFindOne", async (req, res) => {
+  let find = await orderFindOne(req.body.id);
+  find == ""
+    ? (response = { error: true, code: 400, response: "order not found" })
+    : (response.response = find);
+  res.send(response);
+});
+app.get("/orderFindOne/:orderId", async (req, res) => {
+  let find = await orderFindOne(req.params.orderId);
+  find == ""
+    ? (response = { error: true, code: 400, response: "order not found" })
+    : (response.response = find);
+  res.send(response);
+});
+app.post("/orderPost", async (req, res) => {
+  response.response = "posted order";
+  res.send(response);
 });
 
 const PORT = process.env.PORT || "3001";
