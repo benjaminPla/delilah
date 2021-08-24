@@ -21,5 +21,11 @@ async function ordersPost(order) {
     { replacements: [order.user_id, order.product_id], type: "INSERT" }
   );
 }
+async function orderDelete(orderId) {
+  return await sequelize.query("DELETE FROM orders WHERE id = ?;", {
+    replacements: [orderId],
+    type: "DELETE",
+  });
+}
 
-export { ordersFindAll, orderFindOne, ordersPost };
+export { ordersFindAll, orderFindOne, ordersPost, orderDelete };

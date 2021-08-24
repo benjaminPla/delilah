@@ -16,7 +16,12 @@ import {
   productDelete,
   productPut,
 } from "./server/products.js";
-import { ordersFindAll, orderFindOne, ordersPost } from "./server/orders.js";
+import {
+  ordersFindAll,
+  orderFindOne,
+  ordersPost,
+  orderDelete,
+} from "./server/orders.js";
 
 const app = express();
 
@@ -142,11 +147,7 @@ app.delete("/productDelete", async (req, res) => {
   const productName = req.body.product_name;
   let find = await productFindOne(productName);
   find == ""
-    ? (response = {
-        error: true,
-        code: 400,
-        response: "product not found",
-      })
+    ? (response = { error: true, code: 400, response: "product not found" })
     : (productDelete(find),
       (response.response = `deleted product ${productName}`));
   res.send(response);
@@ -188,7 +189,24 @@ app.get("/orderFindOne/:orderId", async (req, res) => {
   res.send(response);
 });
 app.post("/orderPost", async (req, res) => {
+  ordersPost(req.body);
   response.response = "posted order";
+  res.send(response);
+});
+app.delete("/orderDelete", async (req, res) => {
+  let find = await orderFindOne(req.body.id);
+  find == ""
+    ? (response = { error: true, code: 400, response: "order not found" })
+    : (orderDelete(req.body.id),
+      (response.response = `deleted order ${req.body.id}`));
+  res.send(response);
+});
+app.delete("/orderDelete/:orderId", async (req, res) => {
+  let find = await orderFindOne(req.params.orderId);
+  find == ""
+    ? (response = { error: true, code: 400, response: "order not found" })
+    : (orderDelete(req.params.orderId),
+      (response.response = `deleted order ${req.params.orderId}`));
   res.send(response);
 });
 
