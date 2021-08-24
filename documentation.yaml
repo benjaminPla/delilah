@@ -1,0 +1,250 @@
+openapi: 3.0.0
+info:
+  description: "acamica 3rd proyect: delilah"
+  version: "1.0.0"
+  title: "delilah"
+  contact:
+    email: "benjaminpla.dev@gmail.com"
+externalDocs:
+  description: GitHub
+  url: 'https://github.com/benjaminPla'
+servers: 
+  - url: "http://localhost:3000"
+tags:
+  - name: users
+    description: users endpoints
+  - name: products
+    description: products endpoints
+  - name: orders
+    description: orders endpoints
+paths:
+  "/usersFindAll":
+    get:
+      tags:
+        - users
+      summary: get a list of all users
+      responses:
+        200:
+          description: list of users
+  "/userFindOne":
+    get:
+      tags:
+        - users
+      summary: get an unique user
+      responses:
+        '200':
+          description: unique user
+  "/userFindOne/{userNameOrEmail}":
+    get:
+      tags:
+        - users
+      summary: get an unique user
+      parameters:
+        - name: userNameOrEmail
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: unique user
+  "/login":
+    get:
+      tags:
+        - users
+      summary: login
+      responses:
+          200:
+            description: welcome {user_name}
+          400:
+            description: "missing 'user_name' or 'emial' field"
+  "/userPost":
+    post:
+      tags:
+        - users
+      summary: post an user
+      responses:
+        200:
+          description: posted user {user_name}
+        400:
+          description: user already exist
+  "/userDelete":
+    delete:
+      tags:
+        - users
+      summary: delete an user
+      responses:
+        200:
+          description: deleted user {user_name}
+        400:
+          description: user not found
+  "/userDelete/{userNameOrEmail}":
+    delete:
+      tags:
+        - users
+      summary: delete an user
+      parameters:
+        - name: userNameOrEmail
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: delete user {user_name}
+        400:
+          description: user not found
+  "/userPut":
+    put:
+      tags:
+        - users
+      summary: update info of an user
+      responses:
+        200:
+          description: updated user {user_name}
+        400:
+          description: user not found
+  "/productsFindAll":
+    get:
+      tags:
+        - products
+      summary: get a list of all products
+      responses:
+        200:
+          description: list of products
+  "/productFindOne":
+    get:
+      tags:
+        - products
+      summary: get an unique product
+      responses:
+        200:
+          description: unique product
+  "/productFindOne/{productName}":
+    get:
+      tags:
+        - products
+      summary: get an unique product
+      parameters:
+        - name: productName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: unique product
+  "/productPost":
+    post:
+      tags:
+        - products
+      summary: post a product
+      responses:
+        200:
+          description: posted product {user_name}
+        400:
+          description: product already exist
+  "/productDelete":
+    delete:
+      tags:
+        - products
+      summary: delete a product
+      responses:
+        200:
+          description: deleted user {product_name}
+        400:
+          description: product not found
+  "/productDelete/{productName}":
+    delete:
+      tags:
+        - products
+      summary: delete a product
+      parameters:
+        - name: productName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: delete product {product_name}
+        400:
+          description: product not found
+  "/productPut":
+    put:
+      tags:
+        - products
+      summary: update info of a product
+      responses:
+        200:
+          description: updated user {product_name}
+        400:
+          description: product not found
+  "/ordersFindAll":
+    get:
+      tags:
+        - orders
+      summary: get a list of all orders
+      responses:
+        200:
+          description: list of orders
+  "/orderFindOne":
+    get:
+      tags:
+        - orders
+      summary: get an unique order
+      responses:
+        "200":
+          description: "unique order"
+        "400":
+          description: "order not found"
+  "/orderFindOne/{orderId}":
+    get:
+      tags:
+        - orders
+      summary: get an unique order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: unique order   
+        "400":
+          description: "order not found"
+  "/orderPost":
+    post:
+      tags:
+        - orders
+      summary: post an order
+      responses:
+        "200":
+          description: "posted order"
+  "/orderDelete":
+    delete:
+      tags:
+        - orders
+      summary: delete an order
+      responses:
+        200:
+          description: deleted order {order_id}
+        400:
+          description: order not found
+  "/orderDelete/{orderId}":
+    delete:
+      tags:
+        - orders
+      summary: delete an order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: delete order {orderId}
+        400:
+          description: order not found          
