@@ -1,25 +1,28 @@
 import { sequelize } from "./server.js";
 
-async function productsFindAll() {
-  return await sequelize.query("SELECT * FROM products WHERE 1", {
-    type: "SELECT",
-  });
-}
-async function productFindOne(productName) {
-  return await sequelize.query(
-    "SELECT * FROM products WHERE product_name = ?",
-    { replacements: [productName], type: "SELECT" }
-  );
-}
-async function productPost(product) {
-  await sequelize.query(
-    "INSERT INTO products (product_name, price) VALUES (?, ?)",
-    {
-      replacements: [product.product_name, product.price],
-      type: "INSERT",
-    }
-  );
-}
+const productsServer = {
+  findAll: async () => {
+    return await sequelize.query("SELECT * FROM products WHERE 1", {
+      type: "SELECT",
+    });
+  },
+  findOne: async (data) => {
+    return await sequelize.query(
+      "SELECT * FROM products WHERE product_name = ?",
+      { replacements: [data], type: "SELECT" }
+    );
+  },
+  post: async (data) => {
+    await sequelize.query(
+      "INSERT INTO products (product_name, price) VALUES (?, ?)",
+      {
+        replacements: [data.product_name, data.price],
+        type: "INSERT",
+      }
+    );
+  },
+};
+
 async function productDelete(product) {
   await sequelize.query("DELETE FROM products WHERE product_name = ?", {
     replacements: [product[0].product_name],
@@ -33,10 +36,4 @@ async function productPut(product) {
   );
 }
 
-export {
-  productsFindAll,
-  productFindOne,
-  productPost,
-  productDelete,
-  productPut,
-};
+export { productsServer };

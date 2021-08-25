@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { usersRoutes } from "./src/routes/users.js";
+import { productsRoutes } from "./src/routes/products.js";
 dotenv.config();
 
 const app = express();
@@ -11,27 +12,8 @@ app.use(express.json());
 let response = { error: false, code: 200 };
 
 app.use(usersRoutes);
+app.use(productsRoutes);
 
-
-app.get("/productsFindAll", async (req, res) => {
-  response.response = await productsFindAll();
-  res.send(response);
-});
-app.get("/productFindOne", async (req, res) => {
-  const productName = req.body.product_name;
-  let find = await productFindOne(productName);
-  find == ""
-    ? (response.response = "product not found")
-    : (response.response = find);
-  res.send(response);
-});
-app.get("/productFindOne/:productName", async (req, res) => {
-  let find = await productFindOne(req.params.productName);
-  find == ""
-    ? (response.response = "product not found")
-    : (response.response = find);
-  res.send(response);
-});
 app.post("/productPost", async (req, res) => {
   const productName = req.body.product_name;
   let find = await productFindOne(productName);
