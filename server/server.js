@@ -1,15 +1,5 @@
 import { Sequelize } from "sequelize";
-import {
-  usersDropTable,
-  usersCreatetable,
-  usersInsertInto,
-} from "./sql/users.js";
-import {
-  productsDropTable,
-  productsCreateTable,
-  productsInsertInto,
-} from "./sql/products.js";
-import { ordersDropTable, ordersCreateTable } from "./sql/orders.js";
+import { usersDropTable, usersCreatetable, usersInsertInto } from "./user.js";
 
 const sequelize = new Sequelize("delilah", "root", "", {
   host: "localhost",
@@ -20,9 +10,7 @@ const sequelize = new Sequelize("delilah", "root", "", {
   },
 });
 
-await sequelize
-  .authenticate(console.log("sequelize on"))
-  .catch((error) => console.log(error));
+await sequelize.authenticate(console.log("sequelize on"));
 
 // await sequelize.query(usersDropTable());
 // await sequelize.query(usersCreatetable());
@@ -36,3 +24,4 @@ await sequelize
 // await sequelize.query(ordersCreateTable());
 
 export { sequelize };
+``;
