@@ -13,10 +13,9 @@ const usersControllers = {
   },
   login: async (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
+    if (!userNameOrEmail) res.send("missing 'user_name' or 'emial' field");
     let find = await usersServer.findOne(userNameOrEmail);
-    if (!userNameOrEmail) {
-      res.send("missing 'user_name' or 'emial' field");
-    } else if (find == "") {
+    if (find == "") {
       res.send("user not found");
     } else if (!req.body.password) {
       res.send("missing 'password' field");

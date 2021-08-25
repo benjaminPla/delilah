@@ -9,5 +9,11 @@ productsRoutes.get(
   productsControllers.findOne
 );
 productsRoutes.post("/productsPost", productsControllers.post);
+productsRoutes.delete("/productsDelete", productsControllers.delete);
+productsRoutes.delete(
+  "/productsDelete/:productName",
+  productsControllers.delete
+  );
+  productsRoutes.put("/productsPut", productsControllers.put);
 
 export { productsRoutes };
