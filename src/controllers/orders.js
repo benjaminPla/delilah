@@ -15,11 +15,17 @@ const ordersControllers = {
     res.send("posted order");
   },
   delete: async (req, res) => {
-    const data = req.body.id || req.params.orderId; 
+    const data = req.body.id || req.params.orderId;
     let find = await ordersServer.findOne(data);
     find == ""
       ? res.send("order not found")
       : (ordersServer.delete(data), res.send(`deleted order ${data}`));
+  },
+  put: async (req, res) => {
+    let find = await ordersServer.findOne(req.body.id);
+    find == ""
+      ? res.send("order not found")
+      : (ordersServer.put(req.body), res.send(`updated order ${req.body.id}`));
   },
 };
 

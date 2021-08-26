@@ -45,7 +45,7 @@ const productsCreateTable =
   "PRIMARY KEY (id)" +
   ");";
 const productsInsertInto =
-  "INSERT INTO products VALUES" +
+  "INSERT INTO products VALUES " +
   "(1, 'Mushroom - Morels, Dry', 26)," +
   "(2, 'Juice - Prune', 3)," +
   "(3, 'Napkin - Beverage 1 Ply', 7)," +

@@ -5,7 +5,7 @@ import {
   productsCreateTable,
   productsInsertInto,
 } from "./products.js";
-import { ordersDropTable, ordersCreateTable } from "./orders.js";
+import { ordersServer } from "./orders.js";
 
 const sequelize = new Sequelize("delilah", "root", "", {
   host: "localhost",
@@ -26,7 +26,8 @@ await sequelize.authenticate(console.log("sequelize on"));
 // await sequelize.query(productsCreateTable);
 // await sequelize.query(productsInsertInto);
 
-// await sequelize.query(ordersDropTable);
-// await sequelize.query(ordersCreateTable);
+await sequelize.query(ordersServer.dropTable);
+await sequelize.query(ordersServer.createTable);
+await sequelize.query(ordersServer.insertInto);
 
 export { sequelize };
