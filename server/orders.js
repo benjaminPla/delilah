@@ -1,14 +1,17 @@
 import { sequelize } from "./server.js";
 
-async function ordersFindAll() {
-  return await sequelize.query(
-    "SELECT orders.id, users.user_name, products.product_name, products.price " +
-      "FROM users, products, orders " +
-      "WHERE orders.user_id = users.id AND " +
-      "orders.product_id = products.id;",
-    { type: "SELECT" }
-  );
-}
+const ordersServer = {
+  findAll: async () => {
+    return await sequelize.query(
+      "SELECT orders.id, users.user_name, products.product_name, products.price " +
+        "FROM users, products, orders " +
+        "WHERE orders.user_id = users.id AND " +
+        "orders.product_id = products.id;",
+      { type: "SELECT" }
+    );
+  },
+};
+
 async function orderFindOne(orderId) {
   return await sequelize.query("SELECT * FROM orders WHERE id = ?", {
     replacements: [orderId],
@@ -27,5 +30,15 @@ async function orderDelete(orderId) {
     type: "DELETE",
   });
 }
+const ordersDropTable = "DROP TABLE IF EXISTS orders;";
+const ordersCreateTable =
+  "CREATE TABLE orders (" +
+  "id INT NOT NULL AUTO_INCREMENT," +
+  "user_id INT NOT NULL," +
+  "product_id INT NOT NULL," +
+  "PRIMARY KEY (id)," +
+  "FOREIGN KEY (user_id) REFERENCES users (id)," +
+  "FOREIGN KEY (product_id) REFERENCES products (id)" +
+  ");";
 
-export { ordersFindAll, orderFindOne, ordersPost, orderDelete };
+export { ordersServer, ordersDropTable, ordersCreateTable };
