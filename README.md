@@ -4,22 +4,18 @@ Acamica - Proyecto 3 - Pla Benjamin
 
 ## Comenzando 🚀
 
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
-
-Mira **Deployment** para conocer como desplegar el proyecto.
-
 ### Pre-requisitos 📋
 
-_Que cosas necesitas para instalar el software y como instalarlas_
+_Que cosas necesitas para instalar el software y sus links_
 
-- Node.Js,
-- MySQL
+- Node.Js - https://nodejs.org/es/
+- MySQL - https://www.mysql.com/
 
 ### Instalación 🔧
 
 _Sigue los siguientes pasos para la correcta instalacion del proyecto_
 
-1. Clona repositorio GiyHub desde tu consola:
+1. Clona repositorio GitHub desde tu consola:
 
 ```
 git clone https://github.com/benjaminPla/delilah.git
@@ -31,13 +27,13 @@ git clone https://github.com/benjaminPla/delilah.git
 npm i
 ```
 
-_El archivo ".env" no se encuentra dentro de ".gitignore" para una instalaccion y testeo optimos_
+_El archivo ".env" no se encuentra dentro de ".gitignore" para optimizar la instalaccion y testeo_
 
 ## Ejecutando las pruebas ⚙️
 
 Puedes testear todos los endpoints desde tu navegador o utilizando Postman:
 
-_Si elijes Postman primero crea y activa un Enviroment con "base": "http://localhost:3000"_
+_Si elijes Postman primero crea y activa un Enviroment con {"base": "http://localhost:3000"}_
 
 ```
 https://www.getpostman.com/collections/eb32ab8c957c0f3c3d1a
