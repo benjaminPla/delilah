@@ -1,10 +1,6 @@
 import { Sequelize } from "sequelize";
-import { usersDropTable, usersCreateTable, usersInsertInto } from "./user.js";
-import {
-  productsDropTable,
-  productsCreateTable,
-  productsInsertInto,
-} from "./products.js";
+import { usersServer } from "./user.js";
+import { productsServer } from "./products.js";
 import { ordersServer } from "./orders.js";
 
 const sequelize = new Sequelize("delilah", "root", "", {
@@ -18,16 +14,16 @@ const sequelize = new Sequelize("delilah", "root", "", {
 
 await sequelize.authenticate(console.log("sequelize on"));
 
-// await sequelize.query(usersDropTable());
-// await sequelize.query(usersCreatetable());
-// await sequelize.query(usersInsertInto());
+// await sequelize.query(usersServer.dropTable);
+// await sequelize.query(usersServer.createTable);
+// await sequelize.query(usersServer.insertInto);
 
-// await sequelize.query(productsDropTable);
-// await sequelize.query(productsCreateTable);
-// await sequelize.query(productsInsertInto);
+// await sequelize.query(productsServer.dropTable);
+// await sequelize.query(productsServer.createTable);
+// await sequelize.query(productsServer.insertInto);
 
-await sequelize.query(ordersServer.dropTable);
-await sequelize.query(ordersServer.createTable);
-await sequelize.query(ordersServer.insertInto);
+// await sequelize.query(ordersServer.dropTable);
+// await sequelize.query(ordersServer.createTable);
+// await sequelize.query(ordersServer.insertInto);
 
 export { sequelize };
