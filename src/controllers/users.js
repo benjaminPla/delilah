@@ -11,10 +11,9 @@ const usersControllers = {
     let find = await usersServer.findOne(userNameOrEmail);
     res.send(find);
   },
-  login: async (req, res) => {
+  login: (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
-    let find = await usersServer.findOne(userNameOrEmail);
-    res.send(`welcome ${find[0].user_name}`);
+    res.send(`welcome ${userNameOrEmail}`);
   },
   post: (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;

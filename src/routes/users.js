@@ -26,13 +26,13 @@ usersRoutes.get(
 );
 usersRoutes.post(
   "/usersPost",
-  usersMiddlewares.userAlreadyExists,
   usersMiddlewares.missingUserName,
   usersMiddlewares.missingFullName,
   usersMiddlewares.missingEmail,
   usersMiddlewares.missingPhoneNumber,
   usersMiddlewares.missingShippingAddress,
   usersMiddlewares.missingPassword,
+  usersMiddlewares.userAlreadyExists,
   usersControllers.post
 );
 usersRoutes.delete(
@@ -49,13 +49,13 @@ usersRoutes.delete(
 );
 usersRoutes.put(
   "/usersPut",
-  usersMiddlewares.userNotFound,
   usersMiddlewares.missingUserName,
   usersMiddlewares.missingFullName,
   usersMiddlewares.missingEmail,
   usersMiddlewares.missingPhoneNumber,
   usersMiddlewares.missingShippingAddress,
   usersMiddlewares.missingPassword,
+  usersMiddlewares.userNotFound,
   usersControllers.put
 );
 
