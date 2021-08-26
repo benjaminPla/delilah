@@ -9,49 +9,28 @@ const usersControllers = {
     const userNameOrEmail =
       req.body.user_name || req.body.email || req.params.userNameOrEmail;
     let find = await usersServer.findOne(userNameOrEmail);
-    find == "" ? res.send("user not found") : res.send(find);
+    res.send(find);
   },
   login: async (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
-    if (!userNameOrEmail) res.send("missing 'user_name' or 'emial' field");
     let find = await usersServer.findOne(userNameOrEmail);
-    if (find == "") {
-      res.send("user not found");
-    } else if (!req.body.password) {
-      res.send("missing 'password' field");
-    } else {
-      if (find[0].password !== req.body.password) {
-        res.send("incorrect password");
-      } else {
-        res.send(`welcome ${find[0].user_name}`);
-      }
-    }
+    res.send(`welcome ${find[0].user_name}`);
   },
   post: async (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
-    console.log(userNameOrEmail);
-    let find = await usersServer.findOne(userNameOrEmail);
-    find == ""
-      ? (usersServer.post(req.body),
-        res.send(`posted user: ${userNameOrEmail}`))
-      : res.send("user already exist");
+    usersServer.post(req.body);
+    res.send(`posted user: ${userNameOrEmail}`);
   },
   delete: async (req, res) => {
     const userNameOrEmail =
       req.body.user_name || req.body.email || req.params.userNameOrEmail;
-    let find = await usersServer.findOne(userNameOrEmail);
-    find == ""
-      ? res.send("user not found")
-      : (res.send(`deleted user: ${find[0].user_name}`),
-        usersServer.delete(find));
+    usersServer.delete(userNameOrEmail);
+    res.send(`deleted user: ${userNameOrEmail}`);
   },
   put: async (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
-    let find = await usersServer.findOne(userNameOrEmail);
-    find == ""
-      ? res.send("user not found")
-      : (usersServer.put(req.body),
-        res.send(`updated user ${find[0].user_name}`));
+    usersServer.put(req.body);
+    res.send(`updated user ${userNameOrEmail}`);
   },
 };
 

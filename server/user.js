@@ -28,9 +28,13 @@ const usersServer = {
     );
   },
   delete: async (data) => {
-    await sequelize.query("DELETE FROM users WHERE user_name = ?;", {
-      replacements: [data[0].user_name],
-    });
+    await sequelize.query(
+      "DELETE FROM users WHERE user_name = :value OR email = :value;",
+      {
+        replacements: { value: data },
+        type: "DELETE",
+      }
+    );
   },
   put: async (data) => {
     await sequelize.query(
@@ -43,6 +47,7 @@ const usersServer = {
           data.user_name,
           data.email,
         ],
+        type: "UPDATE",
       }
     );
   },
