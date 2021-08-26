@@ -10,26 +10,33 @@ const ordersServer = {
       { type: "SELECT" }
     );
   },
+  findOne: async (data) => {
+    return await sequelize.query(
+      "SELECT orders.id, users.user_name, products.product_name " +
+        "FROM users, products, orders " +
+        "WHERE orders.user_id = users.id AND " +
+        "orders.product_id = products.id AND " +
+        "orders.id = ?",
+      {
+        replacements: [data],
+        type: "SELECT",
+      }
+    );
+  },
+  post: async (data) => {
+    return await sequelize.query(
+      "INSERT INTO orders (user_id, product_id) VALUES (?, ?);",
+      { replacements: [data.user_id, data.product_id], type: "INSERT" }
+    );
+  },
+  delete: async (data) => {
+    return await sequelize.query("DELETE FROM orders WHERE id = ?;", {
+      replacements: [data],
+      type: "DELETE",
+    });
+  },
 };
 
-async function orderFindOne(orderId) {
-  return await sequelize.query("SELECT * FROM orders WHERE id = ?", {
-    replacements: [orderId],
-    type: "SELECT",
-  });
-}
-async function ordersPost(order) {
-  return await sequelize.query(
-    "INSERT INTO orders (user_id, product_id) VALUES (?, ?);",
-    { replacements: [order.user_id, order.product_id], type: "INSERT" }
-  );
-}
-async function orderDelete(orderId) {
-  return await sequelize.query("DELETE FROM orders WHERE id = ?;", {
-    replacements: [orderId],
-    type: "DELETE",
-  });
-}
 const ordersDropTable = "DROP TABLE IF EXISTS orders;";
 const ordersCreateTable =
   "CREATE TABLE orders (" +
