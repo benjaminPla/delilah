@@ -16,18 +16,18 @@ const usersControllers = {
     let find = await usersServer.findOne(userNameOrEmail);
     res.send(`welcome ${find[0].user_name}`);
   },
-  post: async (req, res) => {
+  post: (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
     usersServer.post(req.body);
     res.send(`posted user: ${userNameOrEmail}`);
   },
-  delete: async (req, res) => {
+  delete: (req, res) => {
     const userNameOrEmail =
       req.body.user_name || req.body.email || req.params.userNameOrEmail;
     usersServer.delete(userNameOrEmail);
     res.send(`deleted user: ${userNameOrEmail}`);
   },
-  put: async (req, res) => {
+  put: (req, res) => {
     const userNameOrEmail = req.body.user_name || req.body.email;
     usersServer.put(req.body);
     res.send(`updated user ${userNameOrEmail}`);

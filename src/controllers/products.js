@@ -10,16 +10,16 @@ const productsControllers = {
     let find = await productsServer.findOne(productName);
     res.send(find);
   },
-  post: async (req, res) => {
+  post: (req, res) => {
     productsServer.post(req.body);
     res.send(`posted product: ${req.body.product_name}`);
   },
-  delete: async (req, res) => {
+  delete: (req, res) => {
     const productName = req.body.product_name || req.params.productName;
     productsServer.delete(productName);
     res.send(`deleted product ${productName}`);
   },
-  put: async (req, res) => {
+  put: (req, res) => {
     productsServer.put(req.body);
     res.send(`updated product ${req.body.product_name}`);
   },
