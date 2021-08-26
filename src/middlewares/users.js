@@ -13,31 +13,31 @@ const usersMiddlewares = {
     let find = await usersServer.findOne(userNameOrEmail);
     find == "" ? next() : res.send("user already exist");
   },
-  missingUserNameOrEmail: async (req, res, next) => {
+  missingUserNameOrEmail: (req, res, next) => {
     const userNameOrEmail =
       req.body.user_name || req.body.email || req.params.userNameOrEmail;
     !userNameOrEmail
       ? res.send("missing 'user_name' or 'emial' field")
       : next();
   },
-  missingUserName: async (req, res, next) => {
+  missingUserName: (req, res, next) => {
     !req.body.user_name ? res.send("missing 'user_name' field") : next();
   },
-  missingFullName: async (req, res, next) => {
+  missingFullName: (req, res, next) => {
     !req.body.full_name ? res.send("missing 'full_name' field") : next();
   },
-  missingEmail: async (req, res, next) => {
+  missingEmail: (req, res, next) => {
     !req.body.email ? res.send("missing 'email' field") : next();
   },
-  missingPhoneNumber: async (req, res, next) => {
+  missingPhoneNumber: (req, res, next) => {
     !req.body.phone_number ? res.send("missing 'phone_number' field") : next();
   },
-  missingShippingAddress: async (req, res, next) => {
+  missingShippingAddress: (req, res, next) => {
     !req.body.shipping_address
       ? res.send("missing 'shipping_address' field")
       : next();
   },
-  missingPassword: async (req, res, next) => {
+  missingPassword: (req, res, next) => {
     !req.body.password ? res.send("missing 'password' field") : next();
   },
   incorrectPassword: async (req, res, next) => {

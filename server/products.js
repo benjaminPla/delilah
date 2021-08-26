@@ -23,7 +23,7 @@ const productsServer = {
   },
   delete: async (data) => {
     await sequelize.query("DELETE FROM products WHERE product_name = ?;", {
-      replacements: [data[0].product_name],
+      replacements: [data],
       type: "DELETE",
     });
   },
